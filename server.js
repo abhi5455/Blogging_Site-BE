@@ -14,10 +14,12 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
+// Test Server
 app.get('/', (req, res) => {
     res.json('Hey Client I am Alive!');
 });
 
+// Fetch Blog Posts
 app.get('/posts', async (req, res) => {
     try {
         const posts = await Post.find().sort({ createdAt: -1 });
@@ -27,6 +29,7 @@ app.get('/posts', async (req, res) => {
     }
 });
 
+// Create a new Blog Post
 app.post('/create', async (req, res) => {
     console.log(req.body);
     try {
@@ -39,6 +42,7 @@ app.post('/create', async (req, res) => {
         res.status(500).json({ error: 'Error creating post', details: err.message });
     }
 });
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
